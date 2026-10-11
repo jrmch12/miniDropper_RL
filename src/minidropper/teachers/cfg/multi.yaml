@@ -1,0 +1,53 @@
+# Multi-teacher PPO (RAPTOR pre-training): one teacher per fixed vehicle config,
+# K teachers trained simultaneously per chunk.
+task_name: multi_teacher_ppo
+
+defaults:
+  - _self_
+
+hydra:
+  run:
+    dir: outputs/teachers/${now:%Y-%m-%d}/${now:%H-%M-%S}
+
+params_table: data/params/v1.npz
+config_start: 0          # first row of the train split
+num_configs: 1000        # number of teachers to train (rows config_start ..)
+teachers_per_chunk: 128  # K
+
+# teacher acceptance (RAPTOR: SOLVED_RETURN)
+accept_min_return: 400.0
+accept_max_terminated: 0.05
+
+env:
+  obs_history: 1
+
+train:
+  num_timesteps: 30_000_000      # per teacher
+  num_evals: 6
+  envs_per_teacher: 128          # E  -> num_envs = K * E
+  eval_envs_per_teacher: 16
+  episode_length: 500
+  unroll_length: 32
+  batch_size: 32                 # sequences per minibatch, per teacher
+  num_minibatches: 4
+  num_updates_per_batch: 4
+  reward_scaling: 0.1
+  normalize_observations: true
+  discounting: 0.99
+  learning_rate: 3e-4
+  entropy_cost: 1e-3
+  learning_rate_schedule: 'ADAPTIVE_KL'
+  desired_kl: 0.02
+  max_grad_norm: 1.0
+  seed: 0
+
+  policy_dec_hidden_layers: [64, 64]
+  action_hidden_layers: [64]
+  value_hidden_layers: [256, 256, 256]
+  activation: tanh
+  policy_obs_key: policy_obs
+  value_obs_key: value_obs
+
+  wandb_project: minidropper
+  wandb_run_name: multi_teacher_ppo
+  use_wandb: false

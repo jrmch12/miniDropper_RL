@@ -1,0 +1,58 @@
+# Single-policy PPO (stock brax PPO).
+#   mode=nominal : one teacher on the nominal config (sanity / reward tuning)
+#   mode=index   : one teacher on row `config_index` of the params table
+#   mode=dr      : classic domain randomisation baseline (every env its own
+#                  freshly sampled config, eval on the held-out test split)
+task_name: single_ppo
+
+defaults:
+  - _self_
+
+hydra:
+  run:
+    dir: outputs/single/${now:%Y-%m-%d}/${now:%H-%M-%S}
+
+mode: nominal
+params_table: data/params/v1.npz
+config_index: 0
+dr_seed: 123
+
+env:
+  obs_history: 1   # set 4 together with train.policy_obs_key=student_hist
+
+train:
+  num_timesteps: 30_000_000
+  num_evals: 11
+  num_eval_envs: 256
+  reward_scaling: 0.1
+  episode_length: 500
+  normalize_observations: true
+  action_repeat: 1
+  unroll_length: 32
+  num_minibatches: 16
+  num_updates_per_batch: 4
+  log_training_metrics: true
+  discounting: 0.99
+  learning_rate: 3e-4
+  entropy_cost: 1e-3
+  learning_rate_schedule: 'ADAPTIVE_KL'
+  desired_kl: 0.02
+  max_grad_norm: 1.0
+  num_envs: 4096
+  batch_size: 1024
+  seed: 0
+
+  # Network architecture (RAPTOR teacher: actor 3x64, critic 3x256)
+  policy_dec_hidden_layers: [64, 64]
+  action_hidden_layers: [64]
+  value_hidden_layers: [256, 256, 256]
+  activation: tanh
+  policy_obs_key: policy_obs      # student_obs / student_hist for DR baselines
+  value_obs_key: value_obs
+
+  restore_params_path: null
+  restore_value_fn: true
+
+  wandb_project: minidropper
+  wandb_run_name: single_ppo
+  use_wandb: false

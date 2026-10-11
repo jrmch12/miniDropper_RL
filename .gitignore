@@ -1,0 +1,75 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Training artifacts
+# checkpoints/
+trained_model/
+outputs/
+multirun/
+wandb/
+training_metrics.npz
+
+# Brax/MJX cache
+*.mjcf
+*.mtl
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dataset files (if large)
+datasets/
+*.h5
+*.hdf5
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Custom folders
+reference/
+sandbox/
+private/
+mujoco_playground/
+prompt_engineering/
+colab/
+docs/fine_tuning_memo.txt

@@ -1,0 +1,40 @@
+# RAPTOR post-training: DAgger distillation of the accepted teachers into a GRU student.
+task_name: dagger_student
+
+defaults:
+  - _self_
+
+hydra:
+  run:
+    dir: outputs/student/${now:%Y-%m-%d}/${now:%H-%M-%S}
+
+teachers_dirs: []           # list of train_multi.py run dirs (required)
+params_table: data/params/v1.npz
+val_fraction: 0.1           # accepted teachers held out -> validation imitation loss
+num_test_envs: 1024         # held-out test split configs (no teacher, return / tracking only)
+
+env:
+  obs_history: 1
+
+student:
+  hidden_dim: 64            # RAPTOR: 16
+  input_dim: 64
+
+train:
+  num_epochs: 200           # RAPTOR: 1000
+  teacher_forcing_epochs: 10
+  beta_start: 0.0           # after teacher forcing (RAPTOR: pure on-policy, 0)
+  beta_end: 0.0
+  beta_decay_epochs: 1
+  envs_per_teacher: 16      # RAPTOR: 10 episodes per teacher per epoch
+  val_envs_per_teacher: 8
+  episode_length: 500       # = sequence length (full-episode BPTT)
+  minibatch_size: 64        # sequences per gradient step
+  learning_rate: 1e-4
+  max_grad_norm: 1.0
+  seed: 0
+  eval_every: 5
+
+  wandb_project: minidropper
+  wandb_run_name: dagger_student
+  use_wandb: false

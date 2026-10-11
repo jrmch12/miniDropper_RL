@@ -1,0 +1,130 @@
+{
+  "n": 1000,
+  "n_test": 100,
+  "seed": 0,
+  "rejected": 300,
+  "ranges": {
+    "mass": [
+      0.2,
+      0.7
+    ],
+    "size_deviation": 0.1,
+    "inertia_factor_xx": [
+      0.7,
+      1.4
+    ],
+    "inertia_factor_zz": [
+      0.7,
+      1.5
+    ],
+    "arm_frac": [
+      0.3,
+      0.7
+    ],
+    "com_lat": [
+      0.0,
+      0.012
+    ],
+    "tw": [
+      1.3,
+      3.0
+    ],
+    "thrust_quad": [
+      0.5,
+      1.0
+    ],
+    "asym": [
+      0.8,
+      1.1
+    ],
+    "kq": [
+      0.005,
+      0.05
+    ],
+    "yaw_bias_frac": [
+      -0.05,
+      0.05
+    ],
+    "tau_rise": [
+      0.02,
+      0.1
+    ],
+    "tau_fall": [
+      0.03,
+      0.25
+    ],
+    "servo_max_deg": [
+      10.0,
+      20.0
+    ],
+    "servo_tau": [
+      0.01,
+      0.05
+    ],
+    "servo_rate_deg": [
+      250.0,
+      750.0
+    ],
+    "servo_trim_deg": [
+      -2.0,
+      2.0
+    ],
+    "eta_p": [
+      1.0,
+      3.0
+    ],
+    "act_delay": [
+      0,
+      2
+    ],
+    "drag_lin": [
+      0.0,
+      0.05
+    ],
+    "drag_ang": [
+      0.0,
+      0.0001
+    ],
+    "tether_mag": [
+      0.0,
+      0.3
+    ],
+    "tether_torsion": [
+      0.0,
+      0.01
+    ],
+    "gust_frac": [
+      0.0,
+      1.0
+    ],
+    "gust_tau": [
+      0.2,
+      1.0
+    ]
+  },
+  "nominal": {
+    "mass": 0.4,
+    "radius": 0.03,
+    "height": 0.2,
+    "arm_len": 0.09,
+    "com_lat": 0.004,
+    "tw": 2.0,
+    "thrust_quad": 0.8,
+    "asym": 0.95,
+    "tau_rise": 0.05,
+    "tau_fall": 0.1,
+    "kq": 0.02,
+    "yaw_bias": 0.0,
+    "servo_max": 0.2617993877991494,
+    "servo_tau": 0.02,
+    "servo_rate": 8.726646259971648,
+    "eta_p": 2.0,
+    "act_delay": 1.0,
+    "drag_lin": 0.02,
+    "drag_ang": 1e-05,
+    "tether_mag": 0.1,
+    "tether_torsion": 0.003,
+    "gust_std": 0.0,
+    "gust_tau": 0.5
+  }
+}
